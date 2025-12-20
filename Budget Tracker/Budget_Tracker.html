@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrackMyMoney</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>💰 TrackMyMoney</h1>
+            <p>Take control of your finances with intelligent budgeting</p>
+        </header>
+
+        <!-- Month Navigation -->
+        <div class="month-nav">
+            <button id="prevMonth">← Previous</button>
+            <div class="month-display" id="monthDisplay">December 2025</div>
+            <button id="nextMonth">Next →</button>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="summary-grid">
+            <div class="summary-card income">
+                <label>Total Income</label>
+                <div class="amount" id="totalIncome">₹0</div>
+            </div>
+            <div class="summary-card expense">
+                <label>Total Expenses</label>
+                <div class="amount" id="totalExpense">₹0</div>
+            </div>
+            <div class="summary-card balance">
+                <label>Net Balance</label>
+                <div class="amount" id="netBalance">₹0</div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="main-grid">
+            <!-- Add Transaction Card -->
+            <div class="card">
+                <h2>➕ Add Transaction</h2>
+                <div class="form-group">
+                    <label for="type">Type</label>
+                    <select id="type" onchange="updateCategories()">
+                        <option value="income">Income</option>
+                        <option value="expense">Expense</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category">
+                        <option value="Salary">Salary</option>
+                        <option value="Freelance">Freelance</option>
+                        <option value="Bonus">Bonus</option>
+                        <option value="Investment">Investment Returns</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="amount">Amount (₹)</label>
+                    <input type="number" id="amount" placeholder="Enter amount" min="0" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" id="description" placeholder="Add a note (optional)">
+                </div>
+                <div class="form-group">
+                    <label for="date">Date</label>
+                    <input type="date" id="date">
+                </div>
+                <button class="btn btn-primary" onclick="addTransaction()">Add Transaction</button>
+            </div>
+
+            <!-- Budget Overview Card -->
+            <div class="card">
+                <h2>📊 Monthly Budget</h2>
+                <div class="budget-item">
+                    <div class="budget-header">
+                        <span class="budget-name">Food & Dining</span>
+                        <span class="budget-amount"><span id="foodUsed">0</span> / ₹5,000</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="foodBar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="budget-item">
+                    <div class="budget-header">
+                        <span class="budget-name">Transportation</span>
+                        <span class="budget-amount"><span id="transportUsed">0</span> / ₹3,000</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="transportBar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="budget-item">
+                    <div class="budget-header">
+                        <span class="budget-name">Utilities</span>
+                        <span class="budget-amount"><span id="utilitiesUsed">0</span> / ₹2,000</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="utilitiesBar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="budget-item">
+                    <div class="budget-header">
+                        <span class="budget-name">Entertainment</span>
+                        <span class="budget-amount"><span id="entertainmentUsed">0</span> / ₹2,000</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="entertainmentBar" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs for Transactions and Analytics -->
+        <div class="card">
+            <h2>📈 Transactions & Analytics</h2>
+            
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('transactions', event)">All Transactions</button>
+                <button class="tab-btn" onclick="switchTab('analytics', event)">Expense Analysis</button>
+            </div>
+
+            <!-- Transactions Tab -->
+            <div id="transactions" class="tab-content active">
+                <div class="transaction-list" id="transactionList">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📝</div>
+                        <p>No transactions yet. Start by adding your first transaction!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Tab -->
+            <div id="analytics" class="tab-content">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <div class="pie-chart">
+                        <h3 style="margin-bottom: 15px;">Expense Breakdown</h3>
+                        <div class="pie-visual" id="expenseChart" style="background: conic-gradient(#1ab394 0deg 90deg, #f39c12 90deg 200deg, #e74c3c 200deg 360deg); position: relative;">
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100px; height: 100px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #2c3e50;">
+                                100%
+                            </div>
+                        </div>
+                        <div class="legend" id="expenseLegend">
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #1ab394;"></div>
+                                <span>Food</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #f39c12;"></div>
+                                <span>Transport</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #e74c3c;"></div>
+                                <span>Utilities</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 style="margin-bottom: 15px;">Category Summary</h3>
+                        <div id="categorySummary">
+                            <div class="empty-state">
+                                <p>Add transactions to see category breakdown</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
