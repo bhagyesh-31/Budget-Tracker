@@ -45,8 +45,7 @@ Copy code
 
 ## 🧪 How to Run the Project
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/TrackMyMoney.git
+
 Open index.html in any modern web browser
 
 No additional setup required.
