@@ -43,6 +43,14 @@ Copy code
 
 ---
 
+## 🌐 Live Demo
+
+🚀 Hosted on **Netlify**  
+👉 *https://recipe-sharing-bvb31.netlify.app/*
+
+---
+---
+
 ## 🧪 How to Run the Project
 1. Clone the repository:
 
