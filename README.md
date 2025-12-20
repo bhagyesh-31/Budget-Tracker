@@ -46,7 +46,7 @@ Copy code
 ## 🌐 Live Demo
 
 🚀 Hosted on **Netlify**  
-👉 *https://recipe-sharing-bvb31.netlify.app/*
+👉 *https://track-my-money-bvb.netlify.app/*
 
 ---
 ---
